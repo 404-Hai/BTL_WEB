@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,45 +63,22 @@
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-			<!-- Kiểm tra nếu đã đăng nhập thì sẽ ẩn đi Signin-->
-			<?php
-				// Start the session
-				session_start();
-
-				if (!isset($_SESSION["username"])) {
-				
-				
-			?>
+			<!-- Chưa kiểm tra trường hợp ẩn đi khi có session
+			
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="/Controller/signup.php">Regsiter
+							<a class="nav-link" href="/Controller/signup.php?id=<?php echo $row["id"] ?>">Regsiter
 
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/Controller/signin.php">Sign in</a>
+							<a class="nav-link" href="/Controller/signin.php?id=<?php echo $row["id"] ?>">Sign in</a>
 						</li>
 					</ul>
 				</div>
-			<?php	
-				}else{	
-			?>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item">
-							<a hidden class="nav-link" href="/Controller/signup.php">Regsiter
-
-							</a>
-						</li>
-						<li class="nav-item">
-							<a hidden class="nav-link" href="/Controller/signin.php">Sign in</a>
-						</li>
-					</ul>
-				</div>
-			<?php	
-				}
-			?>
+			-->
+			
           
 			
         </div>
@@ -124,6 +104,8 @@
 								$image = $row["image"];
 								$checkin = $row["checkin"];
 								$checkout = $row["checkout"];
+								$soluong = $row["number"];
+								$ngay = ((int)substr( $checkout,0,2))-((int)substr( $checkin,0,2));
 							}
 					}
 			?>
@@ -149,7 +131,7 @@
 								}
 						?>
                     </div>
-                    <div class="mt-3 font-weight-bold">Phòng bạn đặt là: <?php echo $row["brand"] ?> <a class="font-italic font-weight-light"
+                    <div class="mt-3 font-weight-bold">Phòng bạn đặt là:<input name="brand" value=" <?php echo $row["brand"] ?>" readonly> <a class="font-italic font-weight-light"
                             href="/View/Phong/index.php" style="text-decoration: underline ; font-size: 12px;">Bạn có
                             muốn
                             đổi phòng?</a>
@@ -163,9 +145,9 @@
                     <div class="card my-3">
                         <div class="card-body">
                             <p class="card-text"><b>Check-in:</b>
-                                November <?php echo $row["checkin"]  ?>, 2019 from 2:00 PM
+                               <input name="checkin" value="<?php echo $row["checkin"]  ?>" size="8" readonly>,  2:00 PM
                                 <br><b> Check-out: </b>
-                                November <?php echo $row["checkout"]  ?>, 2019 until 12:00 PM
+                                <input name="checkout" value="<?php echo $row["checkout"]  ?>" size="8" readonly>,  12:00 PM
 
                         </div>
                     </div>
@@ -185,9 +167,12 @@
                                         <p class="card-text"><b> Total length of stay:</b></p>
                                     </div>
                                     <div class="col-sm-3">
-                                        <p class="card-text">Gía phòng <?php echo $row["price"] ?>$</p>
+                                        <p class="card-text">Gía phòng <?php echo $price ?>$</p>
                                         <p class="card-text">Số ngày ở:
-										<?php echo $row["checkout"]-$row["checkin"]?>
+										<?php echo $ngay?>
+										</p>
+										<p class="card-text">Số lượng phòng:
+										<input name="soluong" size="1" value="<?php echo $soluong ?>" readonly>
 										</p>
                                     </div>
                                 </div>
@@ -197,7 +182,7 @@
                             <h5>Price</h5>
                             <div class="text-muted ml-auto">
 								<b >
-									<input name="giaphong" value="<?php echo $row["price"]*($row["checkout"]-$row["checkin"]) ?>" readonly>
+									<input name="giaphong" value="<?php echo $price*$ngay*$soluong ?>" readonly>
 								</b>$
                             </div>
                         </div>
@@ -210,53 +195,42 @@
 
                 <!-- Sidebar Widgets Column -->
                 <div class="col-md-4">
-
+				<!--Kiểm tra nếu có session sẽ tự thêm thông tin vào-->	
+				<?php
+					if (isset($_SESSION["username"])){
+						$user = $_SESSION['name'];
+						require_once("../conn.php");
+						$sql = "SELECT * FROM account_customer WHERE username='$user'";
+						$result = $conn->query($sql);
+						if($result->num_rows ==1){
+							$row = $result->fetch_assoc();
+							$taikhoan = $row["username"];
+							$sdt = $row["numberphone"];
+							$ten = $row["name"];
+							$ngaysinh = $row["birthday"];
+						
+					
+                ?>	
                     <!-- Search Widget -->
                     <div class="card my-4">
                         <h5 class="card-header">Thông tin của bạn</h5>
                         <div class="card-body">
-							<!-- Kiểm tra nếu đã đăng nhập thì sẽ ẩn đi Đăng nhập-->
-							<?php
-								if (!isset($_SESSION["username"])) {
-								
-								
-							?>
-								<div class="border-bottom my-3">
-									<a href="../Controller/signin.php">Đăng nhập</a> nếu bạn đã có tài khoản ?
-								</div>
-							<?php	
-								}else{	
-							?>
-								<div hidden class="border-bottom my-3">
-									<a  href="../Controller/signin.php">Đăng nhập</a> nếu bạn đã có tài khoản ?
-								</div>
-							<?php	
-								}
-							?>
-							
-                            <!-- Lấy thông tin ngu-->
-
                             <div class="form-row ">
                                 
                                     <label for="firstname">Name</label>
-                                    <input type="text" class="form-control" id="firstname" name="nameuser" required>
+                                    <input type="text" class="form-control" id="firstname" name="nameuser" value="<?php echo $ten?>" required>
                                     <div class="valid-feedback">
                                         Looks good!
                                     </div>
                                     <div class="invalid-feedback">
                                         This Field cannot be empty.
                                     </div>
-                                
-
-                                
-
-                        
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-3">
                                     <label for="email">Email address</label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"
-                                        required>
+                                        value="<?php echo $taikhoan?>" required>
                                     <div class="invalid-feedback">
                                         Please Enter a valid email ID
                                     </div>
@@ -267,7 +241,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="confirmEmail">Confirm email</label>
-                                    <input type="email" class="form-control" id="confirmEmail" required>
+                                    <input type="email" class="form-control" id="confirmEmail" value="<?php echo $taikhoan?>" required>
                                     <div id="validate" class="valid-feedback">
                                         Emails should match
                                     </div>
@@ -277,7 +251,7 @@
 
                                 <label for="mobile">Phone</label>
                                 <input type="tel" pattern=".{10}" class="form-control" id="phone" name="phone" oninput="check(this)"
-                                    required>
+                                    value="<?php echo $sdt?>"required>
                                 <div class="valid-feedback">
                                     Looks Good!.
                                 </div>
@@ -299,6 +273,74 @@
 
                         </div>
                     </div>
+					<?php
+						}
+					}else{
+					?>
+					<div class="card my-4">
+                        <h5 class="card-header">Thông tin của bạn</h5>
+                        <div class="card-body">
+                            <div class="form-row ">
+                                
+                                    <label for="firstname">Name</label>
+                                    <input type="text" class="form-control" id="firstname" name="nameuser" value="" required>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        This Field cannot be empty.
+                                    </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="email">Email address</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"
+                                        value="" required>
+                                    <div class="invalid-feedback">
+                                        Please Enter a valid email ID
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks Good!.
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="confirmEmail">Confirm email</label>
+                                    <input type="email" class="form-control" id="confirmEmail" value="" required>
+                                    <div id="validate" class="valid-feedback">
+                                        Emails should match
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <label for="mobile">Phone</label>
+                                <input type="tel" pattern=".{10}" class="form-control" id="phone" name="phone" oninput="check(this)"
+                                    value=""required>
+                                <div class="valid-feedback">
+                                    Looks Good!.
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a valid number.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        Agree to terms and conditions
+                                    </label>
+                                </div>
+                            </div>
+                            <button class="btn btn-booking btn-block" data-toggle="tooltip" data-placement="top"
+                                title="I want this room!" type=" submit">Book</button>
+
+                        </div>
+                    </div>
+					<?php
+					}					
+					?>
 
                     <!-- Categories Widget -->
                     <div class="card my-4">

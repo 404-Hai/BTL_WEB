@@ -1,5 +1,6 @@
 <?php
 require_once("../Controller/checkSignin.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,8 +76,23 @@ require_once("../Controller/checkSignin.php");
                     </div>
 					
                     <div class="card-body">
+					<?php
+						$user = $_SESSION['name'];
+						require_once("../conn.php");
+						$sql = "SELECT * FROM account_customer WHERE username='$user'";
+						$result = $conn->query($sql);
+						
+						if($result->num_rows ==1){
+							$row = $result->fetch_assoc();
+							$taikhoan = $row["username"];
+							$sdt = $row["numberphone"];
+							$ten = $row["name"];
+							$ngaysinh = $row["birthday"];
+						}
+						
+					?>
                         <h5 class="card-title text-center text-uppercase">
-                            TEN TAI KHOAN O DAY
+                            <?php echo $user ?>
                         </h5>
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="dashboard-content" role="tabpanel"
@@ -90,7 +106,7 @@ require_once("../Controller/checkSignin.php");
                                             </h5>
                                         </div>
                                         <!-- card header -->
-                                        <form action="#!">
+                                        <form action="../Controller/addinforoom.php" method="POST" enctype="multipart/form-data">
                                             <div class="card-body bg-dark text-info">
                                                 <div class="row my-2">
                                                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -108,7 +124,9 @@ require_once("../Controller/checkSignin.php");
                                                     </div>
 
                                                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 d-flex">
-                                                        <div class="text-center mx-auto"></div>
+                                                        <div class="text-center mx-auto">
+															<?php echo $ten ?>
+														</div>
                                                     </div>
                                                 </div>
                                                 <div class="row my-2">
@@ -117,7 +135,9 @@ require_once("../Controller/checkSignin.php");
                                                     </div>
 
                                                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 d-flex">
-                                                        <div class="text-center mx-auto">EMAIL HERE</div>
+                                                        <div class="text-center mx-auto">
+															<?php echo $taikhoan ?>
+														</div>
                                                     </div>
                                                 </div>
                                                 <div class="row my-2">
@@ -127,7 +147,7 @@ require_once("../Controller/checkSignin.php");
 
                                                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 d-flex">
                                                         <div class="mx-auto"> <input type="number" name="phone"
-                                                                id="phonenumber" class="form-control" value=""
+                                                                id="phonenumber" class="form-control" value="<?php echo $sdt ?>"
                                                                 required /></div>
 
                                                     </div>
@@ -141,7 +161,7 @@ require_once("../Controller/checkSignin.php");
                                                         <div class=" mx-auto">
                                                             <!-- echo vo o value -->
                                                             <input type="date" name="birthday" id="inputbirthday"
-                                                                class="form-control" value="">
+                                                                class="form-control" value="<?php echo $ngaysinh ?>">
 
                                                         </div>
                                                     </div>
@@ -161,6 +181,7 @@ require_once("../Controller/checkSignin.php");
                             <!-- history -->
                             <div class="tab-pane fade" id="history-content" role="tabpanel" aria-labelledby="history">
                                 <div class="container-fluid d-flex">
+								
                                     <div class="card w-100 border-info mb-3 mx-auto">
                                         <div class="card-header bg-secondary">
                                             <h5 class="card-title text-uppercase text-light">
@@ -172,6 +193,7 @@ require_once("../Controller/checkSignin.php");
                                         <div class="card-body bg-dark text-info">
                                             Lịch sử đặt phòng của bạn
                                             <table class="table table-light table-bordered table-striped my-3">
+													
                                                 <thead>
                                                     <tr>
                                                         <th>Ngày đặt</th>
@@ -180,18 +202,33 @@ require_once("../Controller/checkSignin.php");
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>22-22-99</td>
-                                                        <td>22-33-11</td>
-                                                        <td>King room</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>22-22-99</td>
-                                                        <td>22-33-11</td>
-                                                        <td>Single room</td>
-                                                    </tr>
+                                                    <?php
+													
+													require_once("../conn.php");
+													$sql = "SELECT *FROM info
+														WHERE email='$user' ";
+													$result = $conn->query($sql);
+													if ($result->num_rows > 0) {
+														// output data of each row
+														while($row = $result->fetch_assoc()) {
+															
+													
+													?>		
+															<tr >
+															
+																<td><?php echo $row["checkin"]?></td>
+																<td><?php echo $row["checkout"]?></td>
+																<td><?php echo $row["brand"]?></td>
+																
+															</tr>
+													<?php 
+														}
+													}
+													?>
                                                 </tbody>
+											
                                             </table>
+												
                                         </div>
                                         <!-- card body -->
                                     </div>

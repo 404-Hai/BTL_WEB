@@ -7,8 +7,12 @@
 	$nameuser = $_POST["nameuser"];
 	$email = $_POST["email"];
 	$phone = $_POST["phone"];
-	$sql = "INSERT INTO info (name, price, nameuser, email,phone)
-			VALUES ('$name', '$price', '$nameuser', '$email','$phone')";
+	$checkin = $_POST["checkin"];
+	$checkout = $_POST["checkout"];
+	$brand = $_POST["brand"];
+	$soluong = $_POST["soluong"];
+	$sql = "INSERT INTO info (name, price, nameuser, email,phone,checkin,checkout,brand,soluong)
+			VALUES ('$name', '$price', '$nameuser', '$email','$phone','$checkin','$checkout','$brand','$soluong')";
 			
 	if ($conn->query($sql) === FALSE) {
 		die("Error: " . $sql . $conn->error);

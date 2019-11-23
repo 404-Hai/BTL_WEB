@@ -95,60 +95,48 @@ require_once("../Controller/checkSignin.php");
         <table class="table table-hover ">
             <thead class="thead-dark">
                 <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    
+                    <th>Name</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
                     <th>Phòng</th>
                     <th>Số lượng phòng</th>
-                    <th>Số lượng khách</th>
-                    <th>Actions</th>
+                    <th>Checkin</th>
+					<th>Checkout</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Cảnh</td>
-                    <td>Nguyễn</td>
-                    <td>nhcanh@example.com</td>
-                    <td>0912032511</td>
-                    <td>King</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td><a href="#"><i class="fas fa-check"></i></a> | <a href="#" class="delete" data-toggle="modal"
-                            data-target="#deleteModal"> <i class="fas fa-ban"></i></a>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                    <td>0912032511</td>
-                    <td>Tập thể</td>
-                    <td>1</td>
-                    <td>6</td>
-                    <td><a href="#"><i class="fas fa-check"></i></a> | <a href="#" class="delete" data-toggle="modal"
-                            data-target="#deleteModal"> <i class="fas fa-ban"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                    <td>0912032511</td>
-                    <td>Đôi</td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td><a href="#"><i class="fas fa-check"></i></a> | <a href="#" class="delete" data-toggle="modal"
-                            data-target="#deleteModal"> <i class="fas fa-ban"></i></a>
-                    </td>
-                </tr>
+                <?php
+				require_once("../conn.php");
+				$sql = "SELECT * FROM info";
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+				
+				?>		
+						<tr class="item">
+							<td><?php echo $row["nameuser"]?></td>
+							<td><?php echo $row["email"]?></td>
+							<td><?php echo $row["phone"]?></td>
+							<td><?php echo $row["brand"]?></td>
+							<td><?php echo $row["soluong"]?></td>
+							<td><?php echo $row["checkin"]?></td>
+							<td><?php echo $row["checkout"]?></td>
+							
+						</tr>
+				<?php 
+					}
+				}
+				?>
+              
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal 
 
 <div id="deleteModal" class="modal fade">
     <div class="modal-dialog modal-confirm">
@@ -171,4 +159,4 @@ require_once("../Controller/checkSignin.php");
     </div>
 </div>
 
-<!-- /Modal -->
+ /Modal -->

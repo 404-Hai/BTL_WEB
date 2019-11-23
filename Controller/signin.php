@@ -1,8 +1,6 @@
 <?php
 session_start();
-if(isset ($_SESSION["username"])){
-	header("Location: http://localhost/Web/index.php");
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,10 +102,12 @@ if(isset ($_SESSION["username"])){
 									$password = $_POST["password"];
 									$sql = "SELECT * FROM account_admin WHERE username = '$username' AND password = '$password'";
 									require_once("../conn.php");
-									
 									$result = $conn->query($sql);
+									$data = mysqli_fetch_row($result);
+									
 									if ($result->num_rows > 0) {
 										$_SESSION["username"] = $username;
+										$_SESSION["name"] = $data[0];
 										header("Location: ../Admin/index.php");
 									} else {
 											$username = $_POST["username"];
@@ -116,8 +116,10 @@ if(isset ($_SESSION["username"])){
 											require_once("../conn.php");
 											
 											$result = $conn->query($sql);
+											$data = mysqli_fetch_row($result);
 											if ($result->num_rows > 0) {
 												$_SESSION["username"] = $username;
+												$_SESSION["name"] = $data[0];
 												header("Location:../index.php");
 											} else {
 												echo "Login Failed";

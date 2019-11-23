@@ -102,7 +102,7 @@
 				
 			?>		
             <div class="col-md-7">
-                <a href="/View/Phong/single.php">
+                <a href="/View/Phong/single.php?id=<?php echo $row["id"] ?>">
                     <img class="img-fluid rounded mb-3 mb-md-0" img src="/uploads/<?php echo $row["image"] ?>"
                         style="width: 700px; height: 400px;" alt="">
                 </a>
@@ -132,7 +132,7 @@
 					
 				?>		
 				<div class="col-md-7">
-					<a href="/View/Phong/single.php">
+					<a href="/View/Phong/single.php?id=<?php echo $row["id"] ?>">
 						<img class="img-fluid rounded mb-3 mb-md-0" img src="/uploads/<?php echo $row["image"] ?>"
 							style="width: 700px; height: 400px;" alt="">
 					</a>
@@ -163,7 +163,7 @@
 				
 			?>		
             <div class="col-md-7">
-                <a href="/View/Phong/single.php">
+                <a href="/View/Phong/single.php?id=<?php echo $row["id"] ?>">
                     <img class="img-fluid rounded mb-3 mb-md-0" img src="/uploads/<?php echo $row["image"] ?>"
                         style="width: 700px; height: 400px;" alt="">
                 </a>
@@ -193,7 +193,7 @@
 					
 				?>		
 				<div class="col-md-7">
-					<a href="/View/Phong/single.php">
+					<a href="/View/Phong/single.php?id=<?php echo $row["id"] ?>">
 						<img class="img-fluid rounded mb-3 mb-md-0" img src="/uploads/<?php echo $row["image"] ?>"
 							style="width: 700px; height: 400px;" alt="">
 					</a>

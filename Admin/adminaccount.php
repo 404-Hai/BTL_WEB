@@ -351,9 +351,9 @@ require_once("../Controller/checkSignin.php");
 								<td><?php echo $row["username"]?></td>
 								<td><?php echo $row["numberphone"]?></td>
 								<td>
-									<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="fas fa-cog"></i></a>
-									<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-											class="fas fa-trash"></i></a>
+								<a href=""><i class="fas fa-cog"></i></a> | <a href="../Controller/deleteadmin.php?id=<?php echo $row["id"] ?>" class="delete" 
+									data-target="#deleteModal"><i class="fas fa-trash"></i></a>
+
 								</td>
 							</tr>
 					<?php 
@@ -381,9 +381,9 @@ require_once("../Controller/checkSignin.php");
 								<td><?php echo $row["username"]?></td>
 								<td><?php echo $row["numberphone"]?></td>
 								<td>
-									<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="fas fa-cog"></i></a>
-									<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-											class="fas fa-trash"></i></a>
+								<a href=""><i class="fas fa-cog"></i></a> | <a href="../Controller/deleteuser.php?id=<?php echo $row["id"] ?>" class="delete" 
+									data-target="#deleteModal"><i class="fas fa-trash"></i></a>
+
 								</td>
 							</tr>
 					<?php 
@@ -485,7 +485,7 @@ require_once("../Controller/checkSignin.php");
         </div>
     </div>
 </div>
-<!-- Delete Modal HTML -->
+<!-- Delete Modal HTML 
 <div id="deleteEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -506,3 +506,4 @@ require_once("../Controller/checkSignin.php");
         </div>
     </div>
 </div>
+-->

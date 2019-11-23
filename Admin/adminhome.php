@@ -125,10 +125,8 @@ require_once("../Controller/checkSignin.php");
     <br>
     <!-- order -->
     <div class="orders">
-        <h2>Quản lý đơn đặt hàng</h2>
-        <h4 class="text-center  "><a class="text-warning" href="" id="otherRoom"> Bạn có 4 lượt
-                đặt phòng
-                mới </a><i class="fas fa-hacker-news text-danger"></i>
+        <h2>Quản lý đơn đặt phòng</h2>
+        <h4 class="text-center  "><a class="text-warning" href="" id="otherRoom"> Xem thông tin lượt đặt phòng </a><i class="fas fa-hacker-news text-danger"></i>
         </h4>
     </div>
     <!-- /order -->
@@ -256,7 +254,7 @@ require_once("../Controller/checkSignin.php");
 
     <div class="accounts">
         <h2>Quản lý tài khoản</h2>
-        <h4 class="text-center  "><a class="text-info" id="otherAccount" href=""> Bạn có 4 lượt đăng ký tài khoản mới
+        <h4 class="text-center  "><a class="text-info" id="otherAccount" href=""> Xem thông tin tài khoản hiện có
             </a><i class="fas fa-hacker-news text-danger"></i>
         </h4>
     </div>
@@ -279,23 +277,30 @@ require_once("../Controller/checkSignin.php");
             <table class="table table-bordered table-dark">
                 <thead>
                     <tr>
-                        <th scope="col">Tháng</th>
-                        <th scope="col">Thu vào</th>
+                        <th scope="col">Tổng số lượt đặt phòng</th>
+                        <th scope="col">Thu nhập</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>13020$</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>9392$</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>12000$</td>
-                    </tr>
+              
+                    <?php
+						require_once("../conn.php");
+						$sql = "SELECT SUM(price), COUNT(id_info) FROM info";
+						$result = $conn->query($sql);
+						$data = mysqli_fetch_row($result);
+						//print_r($data);
+						if ($result->num_rows > 0) {
+							$sum = $data[0];
+							$count = $data[1];
+						?>		
+								<tr class="item">
+									<td><?php echo $count?></td>	
+									<td><?php echo $sum?>$</td>	
+								</tr>
+						<?php 
+							
+						}
+						?>
                 </tbody>
             </table>
         </div>
