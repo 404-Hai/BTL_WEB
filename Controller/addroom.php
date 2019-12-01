@@ -38,13 +38,13 @@
 			VALUES ('$name', '$brand', $price, '$description', '$file_name')";
 	}
 	
-	if ($file_name != "") {
+	/*if ($file_name != "") {
 		$target_file = $target_dir . $file_name;
 		
 		if (!move_uploaded_file($_FILES["fileUpload"]["tmp_name"], $target_file)) {
 			die("Sorry, there was an error uploading your file.");
 		}
-	}
+	}*/
 			
 	if ($conn->query($sql) === FALSE) {
 		die("Error: " . $sql . $conn->error);

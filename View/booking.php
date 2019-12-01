@@ -57,7 +57,7 @@ session_start();
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
-            <a id="brand-name" class="navbar-brand mx-auto" href="/index.php">The Dreamer Hotel</a>
+            <a id="brand-name" class="navbar-brand mx-auto" href="../Controller/deletebangtam.php">The Dreamer Hotel</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,7 +132,7 @@ session_start();
 						?>
                     </div>
                     <div class="mt-3 font-weight-bold">Phòng bạn đặt là:<input name="brand" value=" <?php echo $row["brand"] ?>" readonly> <a class="font-italic font-weight-light"
-                            href="/View/Phong/index.php" style="text-decoration: underline ; font-size: 12px;">Bạn có
+                            href="/View/room.php" style="text-decoration: underline ; font-size: 12px;">Bạn có
                             muốn
                             đổi phòng?</a>
                     </div>

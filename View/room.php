@@ -47,7 +47,7 @@
         <div class="collapse navbar-collapse justify-content-around align-item-center" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/index.php">Trang chủ</a>
+                    <a class="nav-link" href="../Controller/deletebangtam.php">Trang chủ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/View/about.php" id="">About</a>
